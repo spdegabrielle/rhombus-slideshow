@@ -1,0 +1,75 @@
+#lang rhombus
+
+import:
+  slideshow open
+  rhombus/meta open
+  rhombus/runtime_path
+  rhombus/scribble/manual
+  pict/rhombus open
+
+runtime_path.def cat_png:
+  "images/cat.png"
+
+fun bar(n):
+  rectangle(~width: 30, ~height: 10 + n*340, ~fill: "lightblue")
+
+def rect = rectangle(~width: 40, ~height: 20, ~fill: "lightblue",
+                     ~line: #'inherit)
+fun defterm(s) :~ Pict:
+  bold(s).colorize("firebrick")
+  
+slide(~title: "Some Rhombus Slideshow examples",
+      @t{Hello},
+      rect,
+      animate(bar).sustain()
+)
+
+slide(~title: "Including text",
+      @t{World})
+
+
+slide(~title: "Including text - the code revealed",
+      cross_fade(@t{World},
+                 rhombusblock(@t{World}),
+                 ~extent: 2).sustain())
+
+
+
+
+
+
+fun fade_out(p :: Pict): animate(fun (n): p.alpha(1-n))
+fun fade_in(p :: Pict): animate(fun (n): p.alpha(n))
+                        
+slide(overlay(fade_out(@t{Hello}),
+              fade_in(@t{World}).sustain(2)))
+slide(@t{This slideshow is intended to demonstrtate the Rhombus Slideshow library.},
+      @t{It draws from the Rhombus Slideshow manual:},
+      @tt{https://docs.racket-lang.org/rhombus-slideshow/index.html},
+      @t{Checked the source for details.}
+      )
+
+slide(~title: "Including images",
+      bitmap(cat_png).scale(0.4))
+
+slide(~title: "Including images",
+      beside(~sep: slide.gap,
+             bitmap(cat_png).scale(0.1),
+             bitmap(cat_png).scale(0.2),
+             bitmap(cat_png).scale(0.3),
+             bitmap(cat_png).scale(0.4)))
+
+slide(~title: "Including images",
+      beside(~sep: 2,
+             & for List (i in 0..5): bitmap(cat_png).scale((0.5 - i/10))))
+
+
+
+
+slide(~title: "Including images",
+      beside(~sep: 2,
+             bitmap(cat_png).scale(0.2),
+             stack(~horiz: #'left,
+                   ~sep: slide.gap,
+                   @para{@defterm{@tt("bitmap()")} includes images},
+                   @para{@defterm{@tt("fun myfun()")} variants are new and good})))
