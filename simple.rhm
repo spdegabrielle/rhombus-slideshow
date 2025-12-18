@@ -24,6 +24,17 @@ slide(~title: "Some Rhombus Slideshow examples",
       animate(bar).sustain()
 )
 
+slide(~title: "Some Rhombus Slideshow examples",
+      rhombusblock(
+        fun bar(n):
+          rectangle(~width: 30, ~height: 10 + n*340, ~fill: "lightblue"),
+        slide(~title: "Some Rhombus Slideshow examples",
+              @t{Hello},
+              rect,
+              animate(bar).sustain()
+              )))
+
+
 slide(~title: "Including text",
       @t{World})
 
@@ -31,7 +42,8 @@ slide(~title: "Including text",
 slide(~title: "Including text - the code revealed",
       cross_fade(@t{World},
                  rhombusblock(@t{World}),
-                 ~extent: 2).sustain())
+                 ~extent: 2).sustain(),
+      @italic("Watch the fade"))
 
 
 
